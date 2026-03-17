@@ -2,14 +2,23 @@
 #include <sstream>
 #include "student.h"
 
-Student::Student() {
+Student::Student() : address(new Address()), birthdate(new Date()), expectedGradDate(new Date()) {
     firstName = "";
     lastName = "";
     creditHoursCompleted = 0;
 }
 
-Student::Student(std::string dataString) {
+Student::Student(std::string dataString) : address(new Address()), birthdate(new Date()), expectedGradDate(new Date()) {
+    firstName = "";
+    lastName = "";
+    creditHoursCompleted = 0;
     init(dataString);
+}
+
+Student::~Student() {
+    delete address;
+    delete birthdate;
+    delete expectedGradDate;
 }
 
 void Student::init(std::string dataString) {
@@ -28,23 +37,35 @@ void Student::init(std::string dataString) {
     getline(ss, gradString, ',');
     getline(ss, creditsString, ',');
 
-    address.init(street, city, state, zip);
-    birthdate.init(birthString);
-    expectedGradDate.init(gradString);
+    address->init(street, city, state, zip);
+    birthdate->init(birthString);
+    expectedGradDate->init(gradString);
 
     creditHoursCompleted = std::stoi(creditsString);
 }
 
 void Student::printStudent() const {
     std::cout << firstName << " " << lastName << std::endl;
-    address.printAddress();
+    address->printAddress();
     std::cout << "DOB: ";
-    birthdate.printDate();
+    birthdate->printDate();
     std::cout << "Grad: ";
-    expectedGradDate.printDate();
+    expectedGradDate->printDate();
     std::cout << "Credits: " << creditHoursCompleted << std::endl;
 }
 
 std::string Student::getLastFirst() const {
     return lastName + ", " + firstName;
+}
+
+std::string Student::getLastName() const {
+    return lastName;
+}
+
+std::string Student::getFirstName() const {
+    return firstName;
+}
+
+int Student::getCreditHoursCompleted() const {
+    return creditHoursCompleted;
 }

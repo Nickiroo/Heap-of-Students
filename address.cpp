@@ -21,5 +21,5 @@ void Address::init(std::string street, std::string city, std::string state, std:
 
 void Address::printAddress() const {
     std::cout << street << std::endl;
-    std::cout << city << ", " << state << " " << zip << std::endl;
+    std::cout << city << " " << state << ", " << zip << std::endl;
 }
